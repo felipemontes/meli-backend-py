@@ -22,7 +22,12 @@ def create_conversation():
     else:
         return jsonify({"error": "missing request params"}, 400)
     
-
+@app.route('/conversations/<user_id>', methods=['GET'])
+def get_user_last_message(user_id):
+    conversation = coll.find_one({'userid': user_id})
+    resp = json_util.dumps(conversation)
+    test = conversation['messages'][-1]['date']
+    return test
 
 if __name__ == "__main__":
     app.run(debug=True)
